@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { register, login } = require("../helpers/users-helpers.js");
+const { register, login } = require("../helpers/auth-helpers.js");
 
 // Register - takes in email & password, responds with success message
 router.post("/register", async (req, res) => {
