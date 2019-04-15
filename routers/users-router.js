@@ -1,5 +1,5 @@
 const router = require("express").Router();
-// import Users from "users-helpers.js";
+const Users = require("../helpers/users-helpers.js");
 
 //Register or CREATE- takes in username, email, password, returns object with new user
 router.post("/register", async (req, res) => {
@@ -10,10 +10,19 @@ router.post("/register", async (req, res) => {
     });
   }
   try {
-    const newUser = await Users.register(user);
-    res.status(200).json(newUser);
+    await Users.register(user);
+    res.status(200).json({
+      message: `Successfully created user ${user.email}`
+    });
   } catch (error) {
-    res.status(500).json({ message: "Error registering user" });
+    if (error === 500) {
+      res.status(500).json({ message: "Error registering user" });
+    }
+    else if (error === 406) {
+      res.status(406).json({
+        message: "Sorry, the email already exists. Please use a different email."
+      });
+    }
   }
 });
 
