@@ -21,8 +21,9 @@ const register = (user) => {
           reject(500);
         });
     }
-
-    reject(406);
+    else {
+      reject(406);
+    }
   });
 };
 

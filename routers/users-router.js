@@ -1,7 +1,7 @@
 const router = require("express").Router();
-const Users = require("../helpers/users-helpers.js");
+const { register } = require("../helpers/users-helpers.js");
 
-//Register or CREATE- takes in username, email, password, returns object with new user
+// Register or CREATE- takes in username, email, password, returns object with new user
 router.post("/register", async (req, res) => {
   let user = req.body;
   if (!user.email || !user.password) {
@@ -10,7 +10,7 @@ router.post("/register", async (req, res) => {
     });
   }
   try {
-    await Users.register(user);
+    await register(user);
     res.status(200).json({
       message: `Successfully created user ${user.email}`
     });
