@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { register } = require("../helpers/users-helpers.js");
+const { register, login } = require("../helpers/users-helpers.js");
 
 // Register or CREATE- takes in username, email, password, returns object with new user
 router.post("/register", async (req, res) => {
@@ -30,19 +30,29 @@ router.post("/register", async (req, res) => {
 //To do: Create token, add bcrypt, and return token along with message.
 router.post("/login", async (req, res) => {
   let { email, password } = req.body;
-  try {
-    if (email && password) {
-      res,
-        status(200).json({
-          message: `Welcome ${user.email}`,
-          username,
+
+  if (email && password) {
+    try {
+      const token = await login({ email, password });
+      res.status(200).json({
+          message: `Welcome ${email}`,
           token
+      });
+    } catch (error) {
+      if (error === 500) {
+        res.status(500).json({
+          message: "Server failed to retrieve users"
         });
-    } else {
-      res.status(401).json({ message: "Please provide username and password" });
+      }
+      else if (error === 406) {
+        res.status(406).json({
+          message: "Invalid credentials. Please try again."
+        });
+      }
     }
-  } catch (error) {
-    res.status(500).json(error);
+
+  } else {
+    res.status(401).json({ message: "Please provide username and password" });
   }
 });
 
