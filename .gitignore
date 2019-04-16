@@ -2,3 +2,4 @@ node_modules/
 yarn.lock
 database/app.sqlite3
 database/testing.sqlite3
+.env
