@@ -4,7 +4,7 @@ const verifyAuth = (req, res, next) => {
   const token = req.headers.authorization;
 
   if (token) {
-    jwt.verify(token, "Temporary Secret For Testing", (error, decodedToken) => {
+    jwt.verify(token, process.env.SECRET, (error, decodedToken) => {
       if (error) {
         if (req.originalUrl === "/api/auth/verify") {
           res.status(200).json({

@@ -10,7 +10,7 @@ function makeTokenFromUser(user) {
     expiresIn: "1d"
   }
 
-  const token = jwt.sign(payload, "Temporary Secret For Testing", options);
+  const token = jwt.sign(payload, process.env.SECRET, options);
 
   return token;
 }
