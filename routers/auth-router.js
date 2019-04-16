@@ -1,5 +1,7 @@
 const router = require("express").Router();
-const { register, login } = require("../helpers/users-helpers.js");
+
+const { register, login } = require("../helpers/auth-helpers.js");
+const verifyAuth = require("../middleware/verify-auth.js");
 
 // Register - takes in email & password, responds with success message
 router.post("/register", async (req, res) => {
@@ -53,6 +55,12 @@ router.post("/login", async (req, res) => {
   } else {
     res.status(401).json({ message: "Please provide username and password" });
   }
+});
+
+router.get("/verify", verifyAuth, (req, res) => {
+  res.status(200).json({
+    currentUserIsVerified: true
+  });
 });
 
 module.exports = router;
