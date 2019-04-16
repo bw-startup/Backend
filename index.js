@@ -1,7 +1,10 @@
+// Only require dotenv when not in production
+!process.env.DB_ENV ? require("dotenv").config() : null;
+
 const server = require("./server.js");
 
-const port = 5000;
+const PORT = process.env.PORT || 5000;
 
-server.listen(port, () => {
-  console.log(`Server up and running on ${port}`);
+server.listen(PORT, () => {
+  console.log(`Server up and running on ${PORT}`);
 });

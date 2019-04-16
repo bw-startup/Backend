@@ -6,14 +6,17 @@
   "author": "olympia <owojcik7@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "start": "node index.js",
     "server": "nodemon --inspect",
     "test": "cross-env DB_ENV=testing jest --watch --verbose",
+    "migrate": "knex migrate:latest",
+    "rollback": "knex migrate:rollback",
+    "seed": "knex seed:run",
     "testing-migrate": "knex migrate:latest --env=testing"
   },
   "dependencies": {
     "bcrypt": "^3.0.6",
     "cors": "^2.8.5",
-    "dotenv": "^7.0.0",
     "express": "^4.16.4",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.16.5",
@@ -21,6 +24,7 @@
   },
   "devDependencies": {
     "cross-env": "^5.2.0",
+    "dotenv": "^7.0.0",
     "jest": "^24.7.1",
     "nodemon": "^1.18.11",
     "supertest": "^4.0.2"
