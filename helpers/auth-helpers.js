@@ -64,8 +64,15 @@ const find = () => {
   return db("users");
 };
 
+const findById = id => {
+  return db("users")
+    .where({ id: Number(id) })
+    .first();
+};
+
 module.exports = {
   register,
   login,
-  find
+  find,
+  findById
 };
