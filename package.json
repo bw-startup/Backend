@@ -6,8 +6,12 @@
   "author": "olympia <owojcik7@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "start": "node index.js",
     "server": "nodemon --inspect",
     "test": "cross-env DB_ENV=testing jest --watch --verbose",
+    "migrate": "knex migrate:latest",
+    "rollback": "knex migrate:rollback",
+    "seed": "knex seed:run",
     "testing-migrate": "knex migrate:latest --env=testing"
   },
   "dependencies": {
