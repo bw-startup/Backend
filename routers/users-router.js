@@ -1,4 +1,6 @@
 const router = require("express").Router();
+const bcrypt = require("bcrypt");
+
 const { find, findById, updateUser } = require("../helpers/auth-helpers.js");
 const verifyAuth = require("../middleware/verify-auth.js");
 
@@ -14,6 +16,9 @@ router.put("/me", verifyAuth, async (req, res) => {
     });
   } else {
     try {
+      const hash = bcrypt.hashSync(user.password, 10);
+      user.password = hash;
+
       const id = await updateUser(user_id, user);
       const updatedUser = await findById(id);
       res.status(200).json(updatedUser);
