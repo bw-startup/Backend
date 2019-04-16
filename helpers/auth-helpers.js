@@ -70,9 +70,15 @@ const findById = id => {
     .first();
 };
 
+const updateUser = (id, user) => {
+  return db("users")
+    .where("id", Number(id))
+    .update(user);
+};
 module.exports = {
   register,
   login,
   find,
-  findById
+  findById,
+  updateUser
 };
