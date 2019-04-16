@@ -4,8 +4,7 @@ const userExists = require("./userExists.js");
 const makeTokenFromUser = require("./makeTokenFromUser.js");
 const db = require("../database/dbConfig.js");
 
-
-const register = (user) => {
+const register = user => {
   let { password, email } = user;
 
   return new Promise(async (resolve, reject) => {
@@ -16,49 +15,57 @@ const register = (user) => {
 
       password = hash;
 
-      db("users").insert({ ...user, password })
+      db("users")
+        .insert({ ...user, password })
         .then(success => {
           resolve({ ...user, password });
         })
-        .catch((err) => {
+        .catch(err => {
           reject(500);
         });
-    }
-    else {
+    } else {
       reject(406);
     }
   });
 };
 
-const login = (user) => {
+const login = user => {
   let { password, email } = user;
 
   return new Promise(async (resolve, reject) => {
     const userDoesExist = await userExists(email);
 
     if (userDoesExist) {
-      db("users").where({ email }).first()
+      db("users")
+        .where({ email })
+        .first()
         .then(userObj => {
-          const passwordIsCorrect = bcrypt.compareSync(password, userObj.password);
+          const passwordIsCorrect = bcrypt.compareSync(
+            password,
+            userObj.password
+          );
           if (userObj && passwordIsCorrect) {
             const token = makeTokenFromUser(userObj);
             resolve(token);
-          }
-          else {
+          } else {
             reject(406);
           }
         })
-        .catch((err) => {
+        .catch(err => {
           reject(500);
-        })
-    }
-    else {
+        });
+    } else {
       reject(406);
     }
   });
 };
 
+const find = () => {
+  return db("users");
+};
+
 module.exports = {
   register,
-  login
+  login,
+  find
 };

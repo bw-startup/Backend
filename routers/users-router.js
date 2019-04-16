@@ -1,5 +1,5 @@
 const router = require("express").Router();
-
+const { find } = require("../helpers/auth-helpers.js");
 const verifyAuth = require("../middleware/verify-auth.js");
 
 // TODO: [PUT] /me (edit user details)
@@ -9,7 +9,7 @@ const verifyAuth = require("../middleware/verify-auth.js");
 // GET list of all users - auth required
 router.get("/users", verifyAuth, async (req, res) => {
   try {
-    const users = await Users.find();
+    const users = await find();
     res.status(200).json(users);
   } catch (error) {
     res.status(500).json({ message: "Error getting list of users" });
