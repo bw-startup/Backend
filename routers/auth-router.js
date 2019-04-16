@@ -6,24 +6,28 @@ const verifyAuth = require("../middleware/verify-auth.js");
 // Register - takes in email & password, responds with success message
 router.post("/register", async (req, res) => {
   let user = req.body;
-  if (!user.email || !user.password) {
+  const hasRequiredFields = !!(user.password && user.email);
+
+  if (!hasRequiredFields) {
     res.status(401).json({
       message: "Email and password are required for registration"
     });
   }
-  try {
-    await register(user);
-    res.status(200).json({
-      message: `Successfully created user ${user.email}`
-    });
-  } catch (error) {
-    if (error === 500) {
-      res.status(500).json({ message: "Error registering user" });
-    }
-    else if (error === 406) {
-      res.status(406).json({
-        message: "Sorry, the email already exists. Please use a different email."
+  else {
+    try {
+      await register(user);
+      res.status(201).json({
+        message: `Successfully created user ${user.email}`
       });
+    } catch (error) {
+      if (error === 500) {
+        res.status(500).json({ message: "Error registering user" });
+      }
+      else if (error === 406) {
+        res.status(406).json({
+          message: "Sorry, the email already exists. Please use a different email."
+        });
+      }
     }
   }
 });
