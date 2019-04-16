@@ -6,7 +6,8 @@
   "author": "olympia <owojcik7@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "server": "nodemon --inspect"
+    "server": "nodemon --inspect",
+    "test": "cross-env DB_ENV=testing jest --watch --verbose"
   },
   "dependencies": {
     "bcrypt": "^3.0.6",
