@@ -1,8 +1,30 @@
 const router = require("express").Router();
 const bcrypt = require("bcrypt");
 
-const { find, findById, updateUser } = require("../helpers/users-helpers.js");
+const {
+  find,
+  findById,
+  updateUser,
+  deleteUser
+} = require("../helpers/users-helpers.js");
 const verifyAuth = require("../middleware/verify-auth.js");
+
+//TODO: [DELETE] /me (delete user details)
+router.delete("/me", verifyAuth, async (req, res) => {
+  const { user_id } = req.tokenPayload;
+  console.log(user_id);
+  try {
+    const deletedUser = await deleteUser(user_id);
+    console.log(deletedUser);
+    if (deletedUser) {
+      res.status(204).end();
+    } else {
+      res.status(404).json({ message: "Your account does not longer exists" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Error deleting your account. " });
+  }
+});
 
 // TODO: [PUT] /me (edit user details)
 // MUST ADD HASHING TO PASSWORD HERE

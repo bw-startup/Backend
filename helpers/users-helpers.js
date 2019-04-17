@@ -16,8 +16,15 @@ const updateUser = (id, user) => {
     .update(user);
 };
 
+const deleteUser = id => {
+  return db("users")
+    .where("id", Number(id))
+    .del();
+};
+
 module.exports = {
   find,
   findById,
-  updateUser
+  updateUser,
+  deleteUser
 };
