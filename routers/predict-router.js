@@ -3,7 +3,6 @@ const router = require("express").Router();
 const verifyAuth = require("../middleware/verify-auth.js");
 const { predictStartup } = require("../helpers/predict-helpers.js");
 
-// TODO [POST] /predict (posts form to company DB)
 router.post("/predict",  async (req, res) => {
   const {
     headquarters,
@@ -32,9 +31,20 @@ router.post("/predict",  async (req, res) => {
     industry
   );
 
+  const incorrectDataType = !(
+    typeof headquarters === "string" &&
+    typeof numFounders === "number" &&
+    typeof numFundingRounds === "number" &&
+    typeof numArticles === "number" &&
+    typeof numEmployees === "number" &&
+    typeof industry === "string"
+  );
+
   try {
     if (missingRequiredInputs) {
       res.status(400).json({ message: "Must provide start-up information" });
+    } else if (incorrectDataType) {
+      res.status(400).json({ message: "Please provide the correct data types" });
     } else {
       const prediction = await predictStartup(startUp);
       if (prediction) {
