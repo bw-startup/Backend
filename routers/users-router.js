@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const bcrypt = require("bcrypt");
 
-const { find, findById, updateUser } = require("../helpers/auth-helpers.js");
+const { find, findById, updateUser } = require("../helpers/users-helpers.js");
 const verifyAuth = require("../middleware/verify-auth.js");
 
 // TODO: [PUT] /me (edit user details)
@@ -19,8 +19,8 @@ router.put("/me", verifyAuth, async (req, res) => {
       const hash = bcrypt.hashSync(user.password, 10);
       user.password = hash;
 
-      const id = await updateUser(user_id, user);
-      const updatedUser = await findById(id);
+      const numItems = await updateUser(user_id, user);
+      const updatedUser = await findById(user_id);
       res.status(200).json(updatedUser);
     } catch (error) {
       res.status(500).json({ message: "Error updating user information" });

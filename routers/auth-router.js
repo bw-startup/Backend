@@ -12,8 +12,7 @@ router.post("/register", async (req, res) => {
     res.status(401).json({
       message: "Email and password are required for registration"
     });
-  }
-  else {
+  } else {
     try {
       await register(user);
       res.status(201).json({
@@ -22,10 +21,10 @@ router.post("/register", async (req, res) => {
     } catch (error) {
       if (error === 500) {
         res.status(500).json({ message: "Error registering user" });
-      }
-      else if (error === 406) {
+      } else if (error === 406) {
         res.status(406).json({
-          message: "Sorry, the email already exists. Please use a different email."
+          message:
+            "Sorry, the email already exists. Please use a different email."
         });
       }
     }
@@ -41,16 +40,15 @@ router.post("/login", async (req, res) => {
     try {
       const token = await login({ email, password });
       res.status(200).json({
-          message: `Welcome ${email}`,
-          token
+        message: `Welcome ${email}`,
+        token
       });
     } catch (error) {
       if (error === 500) {
         res.status(500).json({
           message: "Server failed to retrieve users"
         });
-      }
-      else if (error === 406) {
+      } else if (error === 406) {
         res.status(406).json({
           message: "Invalid credentials. Please try again."
         });
