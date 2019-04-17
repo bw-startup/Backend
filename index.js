@@ -1,5 +1,4 @@
-// Only require dotenv when not in production
-!process.env.DB_ENV ? require("dotenv").config() : null;
+require("dotenv").config();
 
 const server = require("./server.js");
 
