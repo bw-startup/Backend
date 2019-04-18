@@ -3,7 +3,7 @@ const router = require("express").Router();
 const verifyAuth = require("../middleware/verify-auth.js");
 const { predictStartup } = require("../helpers/predict-helpers.js");
 
-router.post("/predict",  async (req, res) => {
+router.post("/predict", async (req, res) => {
   const {
     headquarters,
     numFounders,
@@ -13,14 +13,6 @@ router.post("/predict",  async (req, res) => {
     industry
   } = req.body;
 
-<<<<<<< HEAD
-  const missingRequiredInputs =
-    !headquarters &&
-    !numFounder &&
-    !numFunding &&
-    !numArticles &&
-    !numEmployees;
-=======
   const startUp = {
     headquarters,
     numFounders,
@@ -28,7 +20,7 @@ router.post("/predict",  async (req, res) => {
     numArticles,
     numEmployees,
     industry
-  }
+  };
 
   const missingRequiredInputs = !(
     headquarters &&
@@ -47,19 +39,19 @@ router.post("/predict",  async (req, res) => {
     typeof numEmployees === "number" &&
     typeof industry === "string"
   );
->>>>>>> 2faf2a65b5ee28d3ce87fa1af4f721e4e2b07dd8
 
   try {
     if (missingRequiredInputs) {
       res.status(400).json({ message: "Must provide start-up information" });
     } else if (incorrectDataType) {
-      res.status(400).json({ message: "Please provide the correct data types" });
+      res
+        .status(400)
+        .json({ message: "Please provide the correct data types" });
     } else {
       const prediction = await predictStartup(startUp);
       if (prediction) {
-        res.status(200).json({ ...prediction });
-      }
-      else {
+        res.status(200).json({ ...prediction, inputCompany: startUp });
+      } else {
         throw "";
       }
     }
