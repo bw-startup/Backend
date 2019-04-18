@@ -8,11 +8,11 @@
   "scripts": {
     "start": "npm run migrate; node index.js",
     "server": "nodemon --inspect",
-    "test": "cross-env DB_ENV=testing jest --watch --verbose",
+    "test": "cross-env DB_ENV=testing jest --watchAll --verbose",
     "migrate": "knex migrate:latest",
     "rollback": "knex migrate:rollback",
     "seed": "knex seed:run",
-    "testing-migrate": "knex migrate:latest --env=testing"
+    "testdb": "knex migrate:latest --env=testing"
   },
   "dependencies": {
     "bcrypt": "^3.0.6",
