@@ -12,7 +12,7 @@ router.post("/predict", verifyAuth, async (req, res) => {
     numEmployees
   } = req.body;
 
-  const requiredInputs =
+  const missingRequiredInputs =
     !headquarters &&
     !numFounder &&
     !numFunding &&
@@ -20,7 +20,7 @@ router.post("/predict", verifyAuth, async (req, res) => {
     !numEmployees;
 
   try {
-    if (requiredInputs) {
+    if (missingRequiredInputs) {
       res.status(400).json({ message: "Must provide start-up information" });
     } else {
       const prediction = predictStartup(startUp);

@@ -1,9 +1,10 @@
 const db = require("../database/dbConfig.js");
 
-const predictStartup = startupPred => {
+//TODO: connect to flask API
+const predictStartup = startUp => {
   return db("startups")
-    .insert(startUpPred)
+    .insert(startUp)
     .then(ids => ({ id: ids[0] }));
 };
 
-module.exports = { predict };
+module.exports = { predictStartup };
