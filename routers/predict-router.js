@@ -2,6 +2,7 @@ const router = require("express").Router();
 
 const verifyAuth = require("../middleware/verify-auth.js");
 const { predictStartup } = require("../helpers/predict-helpers.js");
+const validatePredictInputOptions = require("../helpers/validatePredictInputOptions.js");
 
 router.post("/predict", async (req, res) => {
   const {
@@ -40,23 +41,37 @@ router.post("/predict", async (req, res) => {
     typeof industry === "string"
   );
 
+  const invalidInputOption = !validatePredictInputOptions(headquarters, industry);
+
   try {
     if (missingRequiredInputs) {
-      res.status(400).json({ message: "Must provide start-up information" });
+      res.status(400).json({
+        message: "Must provide start-up information"
+      });
     } else if (incorrectDataType) {
-      res
-        .status(400)
-        .json({ message: "Please provide the correct data types" });
+      res.status(400).json({
+          message: "Please provide the correct data types"
+        });
+    } else if (invalidInputOption) {
+      res.status(400).json({
+        message: "Please provide one of the valid options given"
+      });
     } else {
       const prediction = await predictStartup(startUp);
+
       if (prediction) {
-        res.status(200).json({ ...prediction, inputCompany: startUp });
+        res.status(200).json({
+          ...prediction,
+          inputCompany: startUp
+        });
       } else {
         throw "";
       }
     }
   } catch (error) {
-    res.status(500).json({ message: "Error predicting value of this startup" });
+    res.status(500).json({
+      message: "Error predicting value of this startup"
+    });
   }
 });
 
