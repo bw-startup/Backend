@@ -87,3 +87,45 @@ Authorization: <token>
   "currentUserIsVerified": false
 }
 ```
+### User Endpoints
+---
+`[GET] /api/me`
+
+**Purpose:** Returns current user object.
+
+**Expected Header:**
+```plaintext
+Authorization: <token>
+```
+
+**Response:**
+```json
+{
+  "email": "<user_email>"
+}
+```
+---
+`[PUT] /api/me`
+
+**Purpose:** Edit current user fields.
+
+**Expected Header:**
+```plaintext
+Authorization: <token>
+```
+
+**Input Fields:**
+```json
+{
+  "<field_to_edit>": ""
+}
+```
+
+**Required Fields:** At least one of the following: `email` or `password`.
+
+**Response:**
+```json
+{
+  "email": "<new_user_email>"
+}
+```
