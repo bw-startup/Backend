@@ -29,9 +29,7 @@ const register = user => {
   });
 };
 
-const login = user => {
-  let { password, email } = user;
-
+const login = ({ password, email }) => {
   return new Promise(async (resolve, reject) => {
     const userDoesExist = await userExists(email);
 
@@ -60,25 +58,7 @@ const login = user => {
   });
 };
 
-const find = () => {
-  return db("users");
-};
-
-const findById = id => {
-  return db("users")
-    .where({ id: Number(id) })
-    .first();
-};
-
-const updateUser = (id, user) => {
-  return db("users")
-    .where("id", Number(id))
-    .update(user);
-};
 module.exports = {
   register,
   login,
-  find,
-  findById,
-  updateUser
 };
