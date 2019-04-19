@@ -1,7 +1,7 @@
 const router = require("express").Router();
 
 const verifyAuth = require("../middleware/verify-auth.js");
-const { predictStartup } = require("../helpers/predict-helpers.js");
+const getStartupPrediction = require("../helpers/getStartupPrediction.js");
 const validatePredictInputOptions = require("../helpers/validatePredictInputOptions.js");
 
 router.post("/predict", async (req, res) => {
@@ -57,7 +57,7 @@ router.post("/predict", async (req, res) => {
         message: "Please provide one of the valid options given"
       });
     } else {
-      const prediction = await predictStartup(startUp);
+      const prediction = await getStartupPrediction(startUp);
 
       if (prediction) {
         res.status(200).json({

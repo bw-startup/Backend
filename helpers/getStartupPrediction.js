@@ -1,7 +1,7 @@
 const superagent = require("superagent");
 const flaskModelAPI = "https://rocky-woodland-44877.herokuapp.com/api";
 
-const predictStartup = async ({
+const getStartupPrediction = async ({
   headquarters,
   numFounders,
   numFundingRounds,
@@ -31,6 +31,4 @@ const predictStartup = async ({
   return result;
 };
 
-module.exports = {
-  predictStartup
-};
+module.exports = getStartupPrediction;

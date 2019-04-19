@@ -20,11 +20,12 @@ router.post("/register", async (req, res) => {
       });
     } catch (error) {
       if (error === 500) {
-        res.status(500).json({ message: "Error registering user" });
+        res.status(500).json({
+          message: "Error registering user"
+        });
       } else if (error === 406) {
         res.status(406).json({
-          message:
-            "Sorry, the email already exists. Please use a different email."
+          message: "Sorry, the email already exists. Please use a different email."
         });
       }
     }
@@ -32,7 +33,6 @@ router.post("/register", async (req, res) => {
 });
 
 // LOGIN - takes in username & password, responds with message & token
-// TODO: Add set-cookie response header with token
 router.post("/login", async (req, res) => {
   let { email, password } = req.body;
 
@@ -55,7 +55,9 @@ router.post("/login", async (req, res) => {
       }
     }
   } else {
-    res.status(401).json({ message: "Please provide username and password" });
+    res.status(401).json({
+      message: "Please provide username and password"
+    });
   }
 });
 
